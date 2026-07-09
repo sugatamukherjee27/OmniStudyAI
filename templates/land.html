@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniStudy  | Turn Voice & Docs into AI Insights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        <a href="/">
+            <i class='bx bx-brain' style="font-size: 2rem; color: #3b82f6;"></i>
+            <span>OmniStudy </span>
+        </a>
+    </div>
+    <div class="nav-links">
+        <a href="{{ url_for('login') }}">Log In</a>
+        <a href="{{ url_for('register') }}" class="btn-nav">Get Started Free</a>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <h1>Transform Audio, Video, and Documents into Structure.</h1>
+        <p>Instantly generate highly accurate notes, study guides, summaries, and flashcards. Upload recordings or documents in seconds.</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">Start Transcribing Now <i class='bx bx-right-arrow-alt'></i></a>
+        
+        <div class="container grid-3">
+            <div class="card" style="text-align: left;">
+                <i class='bx bx-cloud-upload' style="font-size: 2.5rem; color: #3b82f6; margin-bottom: 1rem;"></i>
+                <h3>1. Upload or Paste</h3>
+                <p style="color: #64748b; margin-top: 0.5rem; font-size: 0.95rem;">Drag and drop audio, video, or Word docs (.docx, .pdf, .mp4, .mp3), or simply paste text prompts.</p>
+            </div>
+            <div class="card" style="text-align: left;">
+                <i class='bx bx-chip' style="font-size: 2.5rem; color: #10b981; margin-bottom: 1rem;"></i>
+                <h3>2. High-Precision AI</h3>
+                <p style="color: #64748b; margin-top: 0.5rem; font-size: 0.95rem;">Powered by Whisper & Llama models to analyze, transcribe, and synthesize structured knowledge quickly.</p>
+            </div>
+            <div class="card" style="text-align: left;">
+                <i class='bx bx-export' style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 1rem;"></i>
+                <h3>3. Instant Export</h3>
+                <p style="color: #64748b; margin-top: 0.5rem; font-size: 0.95rem;">Take your knowledge anywhere. Export generated notes as formatted PDF, DOCX, or TXT documents.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer style="text-align: center; padding: 3rem 1rem; background: #0f172a; color: #94a3b8; font-size: 0.9rem; margin-top: 4rem;">
+    <p>OmniStudy  &copy; 2026. Built with high-performance AI engines.</p>
+</footer>
+
+</body>
+</html>

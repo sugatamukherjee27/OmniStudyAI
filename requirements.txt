@@ -1,0 +1,27 @@
+# Web & Utilities (Pure Python / Dynamic)
+Flask
+gunicorn
+python-dotenv
+supabase
+reportlab
+python-docx
+Werkzeug
+requests
+yarl
+websockets
+typing-inspection
+
+# Audio Processing & Python 3.13+ Shims
+ffmpeg-python
+soundfile
+pydub
+standard-aifc; python_version >= "3.13"
+standard-sunau; python_version >= "3.13"
+
+# AI Speech-to-Text & Heavy Binaries
+openai-whisper
+tqdm
+typer-slim
+zstandard
+numpy>=2.0.0
+torch

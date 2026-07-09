@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your History | OmniStudy </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><a href="/dashboard"><i class='bx bx-brain'></i><span>OmniStudy </span></a></div>
+    <nav class="nav-links">
+        <a href="{{ url_for('dashboard') }}"><i class='bx bx-arrow-back'></i> Dashboard</a>
+        <a href="{{ url_for('profile') }}">Account</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+        <h1>Your Generation History</h1>
+        
+        <div style="display: flex; gap: 1rem;">
+            <form method="get" style="display: flex; gap: 0.5rem;">
+                <input type="text" name="q" placeholder="Search saved output..." value="{{ query or '' }}" style="width: 250px;">
+                <button type="submit" class="btn btn-secondary"><i class='bx bx-search'></i></button>
+            </form>
+            <form method="post" action="{{ url_for('delete_all_history') }}" onsubmit="return confirm('Clear your entire generation history?');">
+                <button class="btn btn-danger"><i class='bx bx-trash'></i> Clear All</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Content Preview</th>
+                    <th>Export Formats</th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if records %}
+                    {% for item in records %}
+                    <tr>
+                        <td style="white-space: nowrap; color: #64748b;">{{ item.formatted_date }}</td>
+                        <td><span class="badge {{ item.output_type }}">{{ item.output_type }}</span></td>
+                        <td style="max-width: 350px;">
+                            <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500;">
+                                {{ item.output_text[:120] }}...
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <a href="{{ url_for('download_history_pdf', history_id=item.id) }}" class="btn btn-secondary" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;"><i class='bx bxs-file-pdf' style="color: #ef4444;"></i> PDF</a>
+                                <a href="{{ url_for('download_history_docx', history_id=item.id) }}" class="btn btn-secondary" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;"><i class='bx bxs-file-doc' style="color: #3b82f6;"></i> DOCX</a>
+                                <a href="{{ url_for('download_history_txt', history_id=item.id) }}" class="btn btn-secondary" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;"><i class='bx bxs-file-txt'></i> TXT</a>
+                            </div>
+                        </td>
+                        <td style="text-align: right;">
+                            <form method="post" action="{{ url_for('delete_history_item', history_id=item.id) }}" style="display: inline;">
+                                <button type="submit" class="btn" style="background: transparent; color: #ef4444; padding: 0.5rem;" title="Delete item"><i class='bx bx-trash' style="font-size: 1.2rem;"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 3rem; color: #64748b;">No generation records found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

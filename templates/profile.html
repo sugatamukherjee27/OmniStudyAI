@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | OmniStudy </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><a href="/dashboard"><i class='bx bx-brain'></i><span>OmniStudy </span></a></div>
+    <nav class="nav-links">
+        <a href="{{ url_for('dashboard') }}"><i class='bx bx-left-arrow-alt'></i> Back to Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </nav>
+</header>
+
+<div class="flash-container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-msg">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div class="container profile-grid">
+    <div class="card" style="text-align: center; height: fit-content;">
+        {% if profile_image %}
+            <img src="{{ url_for('static', filename='uploads/' ~ profile_image) }}" class="profile-avatar">
+        {% else %}
+            <div class="profile-avatar" style="background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; color: #94a3b8;">
+                <i class='bx bx-user'></i>
+            </div>
+        {% endif %}
+        
+        <h3>@{{ username }}</h3>
+        <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 1.5rem;">{{ email }}</p>
+
+        <form method="POST" action="{{ url_for('upload_profile_photo') }}" enctype="multipart/form-data">
+            <label class="btn btn-secondary btn-block">
+                <i class='bx bx-camera'></i> Change Photo
+                <input type="file" name="profile_image" accept="image/*" onchange="this.form.submit()" hidden>
+            </label>
+        </form>
+
+        {% if profile_image %}
+        <form method="POST" action="{{ url_for('delete_profile_photo') }}" style="margin-top: 0.5rem;">
+            <button type="submit" class="btn" style="background: none; color: #ef4444; width: 100%; font-size: 0.85rem;">Remove Profile Photo</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <div class="card">
+            <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem;"><i class='bx bx-id-card'></i> Personal Information</h3>
+            <div class="info-grid">
+                <div>
+                    <label style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">First Name</label>
+                    <p style="font-size: 1.05rem; font-weight: 600;">{{ firstname }}</p>
+                </div>
+                <div>
+                    <label style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Last Name</label>
+                    <p style="font-size: 1.05rem; font-weight: 600;">{{ lastname }}</p>
+                </div>
+                <div>
+                    <label style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Username</label>
+                    <p style="font-size: 1.05rem; font-weight: 600;">{{ username }}</p>
+                </div>
+                <div>
+                    <label style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Date of Birth</label>
+                    <p style="font-size: 1.05rem; font-weight: 600;">{{ date }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4>Security & Passwords</h4>
+                <p style="color: #64748b; font-size: 0.9rem;">Regularly update your credentials to stay protected.</p>
+            </div>
+            <a href="{{ url_for('change_password') }}" class="btn btn-secondary"><i class='bx bx-lock-alt'></i> Change Password</a>
+        </div>
+
+        <div class="card" style="border-color: #fecaca; background: #fef2f2;">
+            <h4 style="color: #991b1b;">Danger Zone</h4>
+            <p style="color: #7f1d1d; font-size: 0.9rem; margin: 0.5rem 0 1rem;">Permanently delete your account along with your generated history. This action is irreversible.</p>
+            <form action="{{ url_for('delete_account') }}" method="POST" onsubmit="return confirm('ARE YOU SURE? This will permanently erase your data.');">
+                <button type="submit" class="btn btn-danger">Delete Account Permanently</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
